@@ -57,8 +57,11 @@ def get_wps(reweight_type, model_str):
 
     watermark_key_list = [
         NGramHashing(
-            FastRecoverySemanticExtractor(n=2, bucket_size=64), 
-            ignore_history=True  # 建议设为 True 以实现最大水印强度，因为 n=2 已保证了足够的局部变化
+            SentenceBoundarySemanticExtractor(
+                boundary_ids=my_boundary_ids,  # ✅ 保留你的动态边界 ID
+                cluster_file_path="semantic_shuffle_opt_clusters.pt" # ✅ 指定新生成的 K-Means 簇文件
+            ), 
+            ignore_history=True
         )
     ]
 
